@@ -22,7 +22,7 @@ public class MyMapper extends Mapper<LongWritable, Text, Text, MyIntermediateWri
     private static final RecordParser RECORD_PARSER = new RecordParserImpl();
     private static final Text IP = new Text();
     private static final MyIntermediateWritable INTERMEDIATE_RESULT = new MyIntermediateWritable();
-    private static final Integer ONE = 1;
+    private static final Long ONE = 1L;
     private static RecordEntity recordEntity = null;
     private static String record;
 

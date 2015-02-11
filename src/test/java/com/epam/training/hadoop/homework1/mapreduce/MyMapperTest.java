@@ -26,10 +26,10 @@ import static org.junit.Assert.*;
  */
 public class MyMapperTest {
 
-    private final Mapper mapper = new MyMapper();
+    private static final Mapper MAPPER = new MyMapper();
 //    private Reducer reducer = new WordCountReducer();
-    private final MapDriver<LongWritable, Text, Text, MyIntermediateWritable> mapDriver = MapDriver.newMapDriver(mapper);
-    
+    private static MapDriver<LongWritable, Text, Text, MyIntermediateWritable> mapDriver;
+
     public MyMapperTest() {
     }
 
@@ -43,6 +43,7 @@ public class MyMapperTest {
 
     @Before
     public void setUp() {
+        mapDriver = MapDriver.newMapDriver(MAPPER);
     }
 
     @After
@@ -53,10 +54,10 @@ public class MyMapperTest {
     public void testWordCountMapperWithoutErrors() {
         try {
             List<Pair<Text, MyIntermediateWritable>> expectedOutput = new LinkedList<>();
-            expectedOutput.add(new Pair<>(new Text("ip1"), new MyIntermediateWritable(1, 40028L)));
-            expectedOutput.add(new Pair<>(new Text("ip1"), new MyIntermediateWritable(1, 56928L)));
-            expectedOutput.add(new Pair<>(new Text("ip2"), new MyIntermediateWritable(1, 318L)));
-            expectedOutput.add(new Pair<>(new Text("ip3"), new MyIntermediateWritable(1, 72209L)));
+            expectedOutput.add(new Pair<>(new Text("ip1"), new MyIntermediateWritable(1L, 40028L)));
+            expectedOutput.add(new Pair<>(new Text("ip1"), new MyIntermediateWritable(1L, 56928L)));
+            expectedOutput.add(new Pair<>(new Text("ip2"), new MyIntermediateWritable(1L, 318L)));
+            expectedOutput.add(new Pair<>(new Text("ip3"), new MyIntermediateWritable(1L, 72209L)));
 
             mapDriver
                     .withInput(new LongWritable(0L), new Text("ip1 - - [24/Apr/2011:04:06:01 -0400] \"GET /~strabal/grease/photo9/927-3.jpg HTTP/1.1\" 200 40028 \"-\" \"Mozilla/5.0 (compatible; YandexImages/3.0; +http://yandex.com/bots)\""))
@@ -70,13 +71,14 @@ public class MyMapperTest {
             fail("IOException should not be thrown");
         }
     }
+
     @Test
     public void testWordCountMapperWithErrors() {
         try {
             List<Pair<Text, MyIntermediateWritable>> expectedOutput = new LinkedList<>();
-            expectedOutput.add(new Pair<>(new Text("ip1"), new MyIntermediateWritable(1, 40028L)));
-            expectedOutput.add(new Pair<>(new Text("ip2"), new MyIntermediateWritable(1, 318L)));
-            expectedOutput.add(new Pair<>(new Text("ip3"), new MyIntermediateWritable(1, 72209L)));
+            expectedOutput.add(new Pair<>(new Text("ip1"), new MyIntermediateWritable(1L, 40028L)));
+            expectedOutput.add(new Pair<>(new Text("ip2"), new MyIntermediateWritable(1L, 318L)));
+            expectedOutput.add(new Pair<>(new Text("ip3"), new MyIntermediateWritable(1L, 72209L)));
 
             mapDriver
                     .withInput(new LongWritable(0L), new Text("ip1 - - [24/Apr/2011:04:06:01 -0400] \"GET /~strabal/grease/photo9/927-3.jpg HTTP/1.1\" 200 40028 \"-\" \"Mozilla/5.0 (compatible; YandexImages/3.0; +http://yandex.com/bots)\""))

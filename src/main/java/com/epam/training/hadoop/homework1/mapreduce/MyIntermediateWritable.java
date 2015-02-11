@@ -16,22 +16,22 @@ import org.apache.hadoop.io.Writable;
  */
 public class MyIntermediateWritable implements Writable {
 
-    private Integer times;
+    private Long times;
     private Long bytes;
 
     @Override
     public void write(DataOutput d) throws IOException {
-        d.writeInt(times);
+        d.writeLong(times);
         d.writeLong(bytes);
     }
 
     @Override
     public void readFields(DataInput di) throws IOException {
-        times = di.readInt();
+        times = di.readLong();
         bytes = di.readLong();
     }
 
-    public MyIntermediateWritable(Integer times, Long bytes) {
+    public MyIntermediateWritable(Long times, Long bytes) {
         this.times = times;
         this.bytes = bytes;
     }
@@ -39,11 +39,11 @@ public class MyIntermediateWritable implements Writable {
     public MyIntermediateWritable() {
     }
 
-    public Integer getTimes() {
+    public Long getTimes() {
         return times;
     }
 
-    public void setTimes(Integer times) {
+    public void setTimes(Long times) {
         this.times = times;
     }
 
