@@ -62,22 +62,152 @@ public class RecordParserImplTest {
      */
     @Test
     public void testParseRecord() {
-        System.out.println("parseRecord");
+        System.out.println("testParseRecord");
         String record = VALID_RECORD;
         RecordParserImpl instance = new RecordParserImpl();
         RecordEntity expResult = RECORD_ENTITY;
         RecordEntity result = instance.parseRecord(record);
 
-        assertEquals(expResult.getIp(), result.getIp());
-        assertEquals(expResult.getSomeUnknownFields1(), result.getSomeUnknownFields1());
-        assertEquals(expResult.getDateTime(), result.getDateTime());
-        assertEquals(expResult.getMethodName(), result.getMethodName());
-        assertEquals(expResult.getLocalLink(), result.getLocalLink());
-        assertEquals(expResult.getProtocolName(), result.getProtocolName());
-        assertEquals(expResult.getStatus(), result.getStatus());
-        assertEquals(expResult.getBytesTransfered(), result.getBytesTransfered());
-        assertEquals(expResult.getHostLink(), result.getHostLink());
-        assertEquals(expResult.getMiscInfo(), result.getMiscInfo());
+        assertEquals("record should be equal to expected", expResult, result);
+    }
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordIp() {
+        System.out.println("testParseRecordIp");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("ip should be equal to expected", expResult.getIp(), result.getIp());
+    }
+
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordSomeUnknownFields1() {
+        System.out.println("testParseRecordSomeUnknownFields1");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("someUnknownFields1 should be equal to expected", expResult.getSomeUnknownFields1(), result.getSomeUnknownFields1());
+    }
+
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordDateTime() {
+        System.out.println("testParseRecordDateTime");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("dateTime should be equal to expected", expResult.getDateTime(), result.getDateTime());
+    }
+
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordMethodName() {
+        System.out.println("testParseRecordMethodName");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("methodName should be equal to expected", expResult.getMethodName(), result.getMethodName());
+    }
+
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordLocalLink() {
+        System.out.println("testParseRecordLocalLink");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("localLink should be equal to expected", expResult.getLocalLink(), result.getLocalLink());
+    }
+
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordProtocolName() {
+        System.out.println("testParseRecordProtocolName");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("protocolName should be equal to expected", expResult.getProtocolName(), result.getProtocolName());
+    }
+
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordStatus() {
+        System.out.println("testParseRecordStatus");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("status should be equal to expected", expResult.getStatus(), result.getStatus());
+    }
+
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordBytesTransfered() {
+        System.out.println("testParseRecordBytesTransfered");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("bytedTransfered should be equal to expected", expResult.getBytesTransfered(), result.getBytesTransfered());
+    }
+
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordHostLink() {
+        System.out.println("testParseRecordHostLink");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("hostLink should be equal to expected", expResult.getHostLink(), result.getHostLink());
+    }
+
+    /**
+     * Test of parseRecord method, of class RecordParserImpl.
+     */
+    @Test
+    public void testParseRecordMiscInfo() {
+        System.out.println("testParseRecordMiscInfo");
+        String record = VALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        RecordEntity expResult = RECORD_ENTITY;
+        RecordEntity result = instance.parseRecord(record);
+
+        assertEquals("miscInfo should be equal to expected", expResult.getMiscInfo(), result.getMiscInfo());
     }
 
     /**
