@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.epam.training.hadoop.homework1.mapreduce;
+package com.epam.training.hadoop.homework1.mapreduce.writable;
 
 import java.io.DataInput;
 import java.io.DataOutput;
@@ -15,7 +15,7 @@ import org.apache.hadoop.io.Writable;
  *
  * @author Oleksandr_Taranovsky
  */
-class MyFinalWritable implements Writable {
+public class MyFinalWritable implements Writable {
 
     private Long totalBytes;
     private Long averageBytes;

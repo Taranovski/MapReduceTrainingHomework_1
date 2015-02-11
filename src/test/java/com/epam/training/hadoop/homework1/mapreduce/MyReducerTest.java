@@ -5,6 +5,8 @@
  */
 package com.epam.training.hadoop.homework1.mapreduce;
 
+import com.epam.training.hadoop.homework1.mapreduce.writable.MyIntermediateWritable;
+import com.epam.training.hadoop.homework1.mapreduce.writable.MyFinalWritable;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.LinkedList;

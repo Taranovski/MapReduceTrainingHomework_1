@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.epam.training.hadoop.homework1.mapreduce;
+package com.epam.training.hadoop.homework1.mapreduce.counter;
 
 /**
  *
  * @author Oleksandr_Taranovsky
  */
 public enum Errors {
-
     ERRORS
 }

@@ -5,6 +5,8 @@
  */
 package com.epam.training.hadoop.homework1.mapreduce;
 
+import com.epam.training.hadoop.homework1.mapreduce.counter.Errors;
+import com.epam.training.hadoop.homework1.mapreduce.writable.MyIntermediateWritable;
 import com.epam.training.hadoop.homework1.entity.RecordEntity;
 import com.epam.training.hadoop.homework1.parser.RecordParser;
 import com.epam.training.hadoop.homework1.parser.RecordParserImpl;

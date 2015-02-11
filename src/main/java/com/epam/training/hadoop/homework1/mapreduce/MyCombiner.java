@@ -5,6 +5,7 @@
  */
 package com.epam.training.hadoop.homework1.mapreduce;
 
+import com.epam.training.hadoop.homework1.mapreduce.writable.MyIntermediateWritable;
 import java.io.IOException;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Reducer;
