@@ -8,9 +8,12 @@ package com.epam.training.hadoop.homework1.mapreduce;
 import com.epam.training.hadoop.homework1.mapreduce.counter.Errors;
 import com.epam.training.hadoop.homework1.mapreduce.writable.MyIntermediateWritable;
 import com.epam.training.hadoop.homework1.entity.RecordEntity;
+import com.epam.training.hadoop.homework1.mapreduce.counter.Browsers;
+import com.epam.training.hadoop.homework1.mapreduce.misc.BrowserFinder;
 import com.epam.training.hadoop.homework1.parser.RecordParser;
 import com.epam.training.hadoop.homework1.parser.RecordParserImpl;
 import java.io.IOException;
+import java.util.EnumSet;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
@@ -20,31 +23,36 @@ import org.apache.hadoop.mapreduce.Mapper;
  * @author Oleksandr_Taranovsky
  */
 public class MyMapper extends Mapper<LongWritable, Text, Text, MyIntermediateWritable> {
-
+    
     private static final RecordParser RECORD_PARSER = new RecordParserImpl();
     private static final Text IP = new Text();
     private static final MyIntermediateWritable INTERMEDIATE_RESULT = new MyIntermediateWritable();
     private static final Long ONE = 1L;
     private static RecordEntity recordEntity = null;
     private static String record;
-
+    
     @Override
     protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
-
+        
         record = value.toString();
-
+        
         if (RECORD_PARSER.isValidRecord(record)) {
             recordEntity = RECORD_PARSER.parseRecord(record);
-
+            
             IP.set(recordEntity.getIp());
             INTERMEDIATE_RESULT.setTimes(ONE);
             INTERMEDIATE_RESULT.setBytes(recordEntity.getBytesTransfered());
             
+            for (Browsers b : BrowserFinder.getBrowsers(recordEntity.getMiscInfo())) {
+                context.getCounter(b).increment(1L);
+            }
+            
             context.write(IP, INTERMEDIATE_RESULT);
+            
         } else {
             context.getCounter(Errors.ERRORS).increment(1);
         }
-
+        
     }
-
+    
 }

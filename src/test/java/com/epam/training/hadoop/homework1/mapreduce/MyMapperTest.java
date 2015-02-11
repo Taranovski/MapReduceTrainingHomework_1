@@ -5,6 +5,7 @@
  */
 package com.epam.training.hadoop.homework1.mapreduce;
 
+import com.epam.training.hadoop.homework1.mapreduce.counter.Browsers;
 import com.epam.training.hadoop.homework1.mapreduce.counter.Errors;
 import com.epam.training.hadoop.homework1.mapreduce.writable.MyIntermediateWritable;
 import java.io.IOException;
@@ -68,6 +69,8 @@ public class MyMapperTest {
                     .withInput(new LongWritable(3L), new Text("ip3 - - [24/Apr/2011:04:22:45 -0400] \"GET /personal/vanagon_1.jpg HTTP/1.1\" 200 72209 \"http://www.inetgiant.in/addetails/1985-vw-vanagon-transporter-single-cab-sinka-diesel-truck-2wd-rhd/3235819\" \"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET4.0C)\""))
                     .withAllOutput(expectedOutput)
                     .withCounter(Errors.ERRORS, 0)
+                    .withCounter(Browsers.FIREFOX, 1)
+                    .withCounter(Browsers.MSIE, 1)
                     .runTest();
         } catch (IOException ex) {
             fail("IOException should not be thrown");
@@ -88,6 +91,8 @@ public class MyMapperTest {
                     .withInput(new LongWritable(2L), new Text("ip2 - - [24/Apr/2011:04:20:20 -0400] \"GET /favicon.ico HTTP/1.1\" 200 318 \"-\" \"Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.16) Gecko/20110319 Firefox/3.6.16\""))
                     .withInput(new LongWritable(3L), new Text("ip3 - - [24/Apr/2011:04:22:45 -0400] \"GET /personal/vanagon_1.jpg HTTP/1.1\" 200 72209 \"http://www.inetgiant.in/addetails/1985-vw-vanagon-transporter-single-cab-sinka-diesel-truck-2wd-rhd/3235819\" \"Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0; WOW64; Trident/4.0; SLCC1; .NET CLR 2.0.50727; Media Center PC 5.0; .NET CLR 3.5.30729; .NET CLR 3.0.30729; .NET4.0C)\""))
                     .withAllOutput(expectedOutput)
+                    .withCounter(Browsers.FIREFOX, 1)
+                    .withCounter(Browsers.MSIE, 1)
                     .withCounter(Errors.ERRORS, 1)
                     .runTest();
         } catch (IOException ex) {
