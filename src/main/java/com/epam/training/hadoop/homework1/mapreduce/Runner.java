@@ -6,7 +6,9 @@
 package com.epam.training.hadoop.homework1.mapreduce;
 
 import com.epam.training.hadoop.homework1.mapreduce.writable.MyFinalWritable;
+import com.epam.training.hadoop.homework1.mapreduce.writable.MyIntermediateWritable;
 import java.io.IOException;
+import org.apache.hadoop.conf.Configurable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
@@ -15,21 +17,28 @@ import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
+import org.apache.hadoop.util.Tool;
+import org.apache.hadoop.util.ToolRunner;
 
 /**
  *
  * @author Oleksandr_Taranovsky
  */
-public class Runner extends Configured {
+public class Runner extends Configured implements Tool {
 
     private static final String INPUT_PATH_CONFIG = "mapreduce.homework1.inputpath";
     private static final String OUTPUT_PATH_CONFIG = "mapreduce.homework1.outputpath";
 
-    public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
+    public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException, Exception {
+        int res = ToolRunner.run(new Configuration(), new Runner(), args);
+        System.exit(res);
+    }
 
-        Configuration conf = new Runner().getConf();
+    @Override
+    public int run(String[] args) throws Exception {
+        Configuration conf = getConf();
 
-        conf.set("mapred.output.compression.codec", "org.apache.hadoop.io.compress.SnappyCodec");
+        conf.set("mapreduce.output.fileoutputformat.compress.codec", "org.apache.hadoop.io.compress.SnappyCodec");
 
         String inputPath = conf.get(INPUT_PATH_CONFIG);
         String outputPath = conf.get(OUTPUT_PATH_CONFIG);
@@ -49,6 +58,9 @@ public class Runner extends Configured {
         job.setCombinerClass(MyCombiner.class);
         job.setReducerClass(MyReducer.class);
 
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(MyIntermediateWritable.class);
+
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(MyFinalWritable.class);
         job.setNumReduceTasks(2);
@@ -62,6 +74,6 @@ public class Runner extends Configured {
         SequenceFileOutputFormat.setOutputCompressionType(job, CompressionType.BLOCK);
         SequenceFileOutputFormat.setCompressOutput(job, true);
 
-        System.exit(job.waitForCompletion(true) ? 0 : 1);
+        return job.waitForCompletion(true) ? 0 : 1;
     }
 }
