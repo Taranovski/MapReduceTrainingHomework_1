@@ -7,10 +7,11 @@ package com.epam.training.hadoop.homework1.mapreduce;
 
 import com.epam.training.hadoop.homework1.mapreduce.writable.MyFinalWritable;
 import java.io.IOException;
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.SequenceFile.CompressionType;
 import org.apache.hadoop.io.Text;
-import org.apache.hadoop.mapred.JobConf;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
@@ -19,28 +20,27 @@ import org.apache.hadoop.mapreduce.lib.output.SequenceFileOutputFormat;
  *
  * @author Oleksandr_Taranovsky
  */
-public class Runner {
+public class Runner extends Configured {
 
     private static final String INPUT_PATH_CONFIG = "mapreduce.homework1.inputpath";
     private static final String OUTPUT_PATH_CONFIG = "mapreduce.homework1.outputpath";
-    
-    
+
     public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 
-        JobConf conf = new JobConf();
+        Configuration conf = new Runner().getConf();
 
         conf.set("mapred.output.compression.codec", "org.apache.hadoop.io.compress.SnappyCodec");
-        
+
         String inputPath = conf.get(INPUT_PATH_CONFIG);
         String outputPath = conf.get(OUTPUT_PATH_CONFIG);
-        
+
         if (inputPath == null) {
             throw new RuntimeException("no input path set, try to set it by adding -D" + INPUT_PATH_CONFIG + "=<path>");
         }
         if (outputPath == null) {
             throw new RuntimeException("no output path set, try to set it by adding -D" + OUTPUT_PATH_CONFIG + "=<path>");
         }
-        
+
         Job job = Job.getInstance(conf, "Log analyse");
 
         job.setJarByClass(Runner.class);
@@ -55,10 +55,10 @@ public class Runner {
 
         job.setInputFormatClass(TextInputFormat.class);
         job.setOutputFormatClass(SequenceFileOutputFormat.class);
-        
+
         TextInputFormat.addInputPath(job, new Path(inputPath));
         SequenceFileOutputFormat.setOutputPath(job, new Path(outputPath));
-        
+
         SequenceFileOutputFormat.setOutputCompressionType(job, CompressionType.BLOCK);
         SequenceFileOutputFormat.setCompressOutput(job, true);
 
