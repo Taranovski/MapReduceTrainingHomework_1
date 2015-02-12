@@ -8,7 +8,6 @@ package com.epam.training.hadoop.homework1.mapreduce;
 import com.epam.training.hadoop.homework1.mapreduce.writable.MyFinalWritable;
 import com.epam.training.hadoop.homework1.mapreduce.writable.MyIntermediateWritable;
 import java.io.IOException;
-import org.apache.hadoop.conf.Configurable;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
 import org.apache.hadoop.fs.Path;
