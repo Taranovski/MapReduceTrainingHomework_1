@@ -13,7 +13,6 @@ import com.epam.training.hadoop.homework1.mapreduce.misc.BrowserFinder;
 import com.epam.training.hadoop.homework1.parser.RecordParser;
 import com.epam.training.hadoop.homework1.parser.RecordParserImpl;
 import java.io.IOException;
-import java.util.EnumSet;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Mapper;
