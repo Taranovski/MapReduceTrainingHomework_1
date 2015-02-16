@@ -6,6 +6,7 @@
 package com.epam.training.hadoop.homework1.parser;
 
 import com.epam.training.hadoop.homework1.entity.RecordEntity;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.joda.time.DateTime;
@@ -20,9 +21,9 @@ import org.joda.time.format.DateTimeFormatter;
 public class RecordParserImpl implements RecordParser {
 
     private final static String EMPTY_RECORD = "";
-    private final static Pattern VALID_RECORD = Pattern.compile("(ip\\d+)\\s(.+)\\s(\\[(\\d{2}/\\w{3}/\\d{4}:\\d{2}:\\d{2}:\\d{2})\\s(-\\d{4})\\])\\s(\\\"(\\w+)\\s(\\/.+)\\s(.+)\\\")\\s(\\d+)\\s(\\d+)\\s(\\\"(.+)\\\")\\s(\\\"(.+)\\\")");
+    private final static Pattern VALID_RECORD = Pattern.compile("(ip\\d+)\\s(.+)\\s(\\[(.+)\\s(.+)\\])\\s(\\\"(\\w+)\\s(\\/.+)\\s(.+)\\\")\\s(\\d+)\\s(\\d+)\\s(\\\"(.+)\\\")\\s(\\\"(.+)\\\")");
     private static Matcher matcher;
-    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern("dd/MMM/yyyy:HH:mm:ss");
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormat.forPattern("dd/MMM/yyyy:HH:mm:ss").withLocale(Locale.ENGLISH);
 
     @Override
     public boolean isValidRecord(String record) {
@@ -34,7 +35,17 @@ public class RecordParserImpl implements RecordParser {
             return false;
         }
         matcher = VALID_RECORD.matcher(record);
-        return matcher.find();
+        if (matcher.find()) {
+            try {
+                DateTime.parse(matcher.group(4), DATE_TIME_FORMATTER);
+            } catch (RuntimeException e) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return true;
     }
 
     @Override
@@ -43,7 +54,7 @@ public class RecordParserImpl implements RecordParser {
             return null;
         }
         RecordEntity recordEntity = new RecordEntity();
-        
+
         recordEntity.setIp(matcher.group(1));
         recordEntity.setSomeUnknownFields1(matcher.group(2));
         recordEntity.setDateTime(DateTime.parse(matcher.group(4), DATE_TIME_FORMATTER).withZoneRetainFields(DateTimeZone.forID(matcher.group(5))));
@@ -54,7 +65,7 @@ public class RecordParserImpl implements RecordParser {
         recordEntity.setBytesTransfered(Long.valueOf(matcher.group(11)));
         recordEntity.setHostLink(matcher.group(13));
         recordEntity.setMiscInfo(matcher.group(15));
-        
+
         return recordEntity;
     }
 }

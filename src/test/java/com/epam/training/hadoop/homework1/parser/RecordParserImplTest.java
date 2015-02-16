@@ -25,6 +25,7 @@ public class RecordParserImplTest {
     private final static String NULL_RECORD = null;
     private final static String INVALID_RECORD = "if54p1 - - [24/Apr/2011:04:10:19 -0400] \"Gdf5434524523ET /~strabal/grease/photo1/97-13.jpg HTTP/1.1\" 20d0 fghsgafds56928 \"-\" \"Mozilla/5.0 (compatible; YandexImages/3.0; +http://yandex.com/bots)\"";
     private final static String VALID_RECORD = "ip1 - - [24/Apr/2011:04:10:19 -0400] \"GET /~strabal/grease/photo1/97-13.jpg HTTP/1.1\" 200 56928 \"-\" \"Mozilla/5.0 (compatible; YandexImages/3.0; +http://yandex.com/bots)\"";
+    private final static String INVALID_TIMEDATE_LOCALE_RECORD = "ip1 - - [24/Апр/2011:04:10:19 -0400] \"GET /~strabal/grease/photo1/97-13.jpg HTTP/1.1\" 200 56928 \"-\" \"Mozilla/5.0 (compatible; YandexImages/3.0; +http://yandex.com/bots)\"";
 
     private final static RecordEntity RECORD_ENTITY = new RecordEntity();
 
@@ -246,6 +247,19 @@ public class RecordParserImplTest {
     public void testIsValidRecordWithInvalidRecord() {
         System.out.println("testIsValidRecordWithInvalidRecord");
         String record = INVALID_RECORD;
+        RecordParserImpl instance = new RecordParserImpl();
+        boolean expResult = false;
+        boolean result = instance.isValidRecord(record);
+        assertEquals("invalid record should not be a valid record", expResult, result);
+    }
+    /**
+     * Test of isValidRecord method with empty record, of class
+     * RecordParserImpl.
+     */
+    @Test
+    public void testIsValidRecordWithInvalidDateTimeLocaleRecord() {
+        System.out.println("testIsValidRecordWithInvalidDateTimeLocaleRecord");
+        String record = INVALID_TIMEDATE_LOCALE_RECORD;
         RecordParserImpl instance = new RecordParserImpl();
         boolean expResult = false;
         boolean result = instance.isValidRecord(record);
